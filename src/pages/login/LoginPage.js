@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, createRef, useEffect, useContext } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {
 	Paper,
@@ -6,9 +6,10 @@ import {
 	TextField,
 	Button,
 	Divider,
-	Fade,
+	CircularProgress,
+	Avatar,
 } from "@material-ui/core";
-import { Person as LoginIcon } from "@material-ui/icons";
+import { GlobalUserContext } from "../../GlobalUserState";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -33,37 +34,40 @@ const useStyles = makeStyles((theme) => ({
 	input: {
 		display: "none",
 	},
-	imageSelector: {
-		borderRadius: "50%",
-		border: "1px solid",
-		bordercolor: theme.palette.primary.dark,
-		backgroundColor: theme.palette.primary.light,
+	avatar: {
 		width: 80,
 		height: 80,
-		objectFit: "scale-down",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		"& :hover": {
+		fontSize: "0.8rem",
+		backgroundColor: theme.palette.primary.main,
+		transition: theme.transitions.create(["box-shadow"]),
+		"&:hover": {
+			boxShadow: `0px 0px 6px 2px ${theme.palette.primary.main}`,
 			cursor: "pointer",
 		},
 	},
-	img: {
-		width: 80,
-		height: 80,
-		borderRadius: "50%",
-		objectFit: "scale-down",
+	loginLoading: {
+		marginRight: theme.spacing(1),
 	},
 }));
 
 export default function LoginPage(props) {
-	const classes = useStyles();
 	const inputRef = createRef(null);
+	const [username, setUsername] = useState("");
 	const [image, setImage] = useState(null);
 	const [imageUrl, setImageUrl] = useState(null);
+	const [isUsernameError, setUsernameError] = useState(false);
+	const [isLoginLoading, setLoginLoading] = useState(false);
+	const classes = useStyles({ isUsernameError: isUsernameError });
+
+	const [user, setUser] = useContext(GlobalUserContext);
+	console.log(user);
 
 	function triggerInput() {
-		if (inputRef.current) inputRef.current.click();
+		if (!imageUrl && inputRef.current) inputRef.current.click();
+		else {
+			setImage(null);
+			setImageUrl(null);
+		}
 	}
 
 	function inputOnChange(e) {
@@ -79,6 +83,19 @@ export default function LoginPage(props) {
 		};
 	}, []);
 
+	function loginOnClick() {
+		if (isLoginLoading) return;
+		if (!username || username.length < 4 || username.length > 8) {
+			setUsernameError(true);
+			return;
+		}
+		setLoginLoading(true);
+		setTimeout(() => {
+			setUser({ username: username, imageUrl: imageUrl });
+			setLoginLoading(false);
+		}, 800);
+	}
+
 	return (
 		<Paper className={classes.root} elevation={1}>
 			<Paper className={classes.loginContainer}>
@@ -88,29 +105,43 @@ export default function LoginPage(props) {
 				<Divider style={{ width: "100%" }} />
 
 				<TextField
-					placeholder="username"
-					inputProps={{ min: 0, style: { textAlign: "center" } }}
+					onFocus={() => setUsernameError(false)}
+					label="Username"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+					inputProps={{
+						min: 0,
+						style: { textAlign: "center" },
+					}}
 					InputProps={{ textAlign: "center" }}
+					helperText="* between 4 and 8 characters"
+					color="primary"
+					error={isUsernameError}
 				/>
+
 				<input
 					className={classes.input}
 					type="file"
+					accept=".jpg, .jpeg, .png"
 					ref={inputRef}
 					onChange={inputOnChange}
 				/>
-				<div className={classes.imageSelector} onClick={triggerInput}>
-					{imageUrl ? (
-						<Fade in>
-							<img className={classes.img} src={imageUrl} />
-						</Fade>
-					) : (
-						<Typography variant="body1" component="p">
-							Click to upload
-						</Typography>
-					)}
-				</div>
+				<Avatar
+					className={classes.avatar}
+					onClick={triggerInput}
+					src={imageUrl}
+				>
+					Click to set your profile image
+				</Avatar>
 
-				<Button variant="outlined" color="primary">
+				<Button variant="outlined" color="primary" onClick={loginOnClick}>
+					{isLoginLoading && (
+						<CircularProgress
+							className={classes.loginLoading}
+							size={20}
+							thickness={7}
+						/>
+					)}
 					<Typography variant="subtitle1">Join the chat</Typography>
 				</Button>
 			</Paper>

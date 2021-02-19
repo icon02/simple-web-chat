@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { Typography, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import RouterSwitch from "react-router/Switch";
+import Route from "react-router/Route";
+import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/login/LoginPage";
 import ChatPage from "./pages/chat/ChatPage";
-import ContactComponent from "./pages/chat/components/ContactComponent";
+import LandingPage from "./pages/LandingPage";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,10 +22,11 @@ function App() {
 
 	return (
 		<Paper className={classes.root}>
-			{/* 
-    <LoginPage />*/}
-
-			<ChatPage />
+			<RouterSwitch>
+				<Route path="/login" exact component={LoginPage} />
+				<ProtectedRoute path="/chat" exact component={ChatPage} />
+				<Route path="/" exact component={LandingPage} />
+			</RouterSwitch>
 		</Paper>
 	);
 }
