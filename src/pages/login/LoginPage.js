@@ -60,6 +60,7 @@ export default function LoginPage(props) {
 	const classes = useStyles({ isUsernameError: isUsernameError });
 
 	const [user, setUser] = useContext(GlobalUserContext);
+
 	console.log(user);
 
 	function triggerInput() {
@@ -71,7 +72,6 @@ export default function LoginPage(props) {
 	}
 
 	function inputOnChange(e) {
-		console.log(e);
 		setImage(e.target.files[0]);
 		setImageUrl(URL.createObjectURL(e.target.files[0]));
 	}
@@ -93,6 +93,7 @@ export default function LoginPage(props) {
 		setTimeout(() => {
 			setUser({ username: username, imageUrl: imageUrl });
 			setLoginLoading(false);
+			props.history.push("/chat");
 		}, 800);
 	}
 

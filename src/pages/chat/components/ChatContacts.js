@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { GlobalUserContext } from "../../../GlobalUserState";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {
 	InputBase,
@@ -151,6 +152,9 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	userImageDialog: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
 		[theme.breakpoints.down("sm")]: {
 			width: 320,
 			height: 240,
@@ -159,6 +163,12 @@ const useStyles = makeStyles((theme) => ({
 			width: 540,
 			height: 360,
 		},
+	},
+	dialogImage: {
+		width: "100%",
+		height: "auto",
+		maxHeight: "100%",
+		objectFit: "scale-down",
 	},
 }));
 
@@ -258,6 +268,7 @@ const test_contacts = [
 export default function ChatContacts({
 	selectedContact,
 	setSelectedContact = () => {},
+	history,
 	...props
 }) {
 	const [lastScrollActionWasDown, setLastScrollActionWasDown] = useState(
@@ -279,6 +290,8 @@ export default function ChatContacts({
 	] = useState(false);
 	const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 	const [showUserImageDialog, setShowUserImageDialog] = useState(false);
+
+	const [user, setUser] = useContext(GlobalUserContext);
 
 	const isMdAndUp = useMediaQuery(useTheme().breakpoints.up("md"));
 
@@ -318,6 +331,8 @@ export default function ChatContacts({
 	}
 
 	function logout() {
+		setUser(null);
+		// history.push("/login");
 		// TODO
 	}
 
@@ -345,7 +360,9 @@ export default function ChatContacts({
 				open={showUserImageDialog}
 				onClose={() => setShowUserImageDialog(false)}
 			>
-				<div className={classes.userImageDialog}>UserImage</div>
+				<div className={classes.userImageDialog}>
+					<img className={classes.dialogImage} src={user.imageUrl} />
+				</div>
 			</Dialog>
 			<Snackbar
 				anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -430,11 +447,12 @@ export default function ChatContacts({
 						component="p"
 						style={{ fontSize: "0.75rem" }}
 					>
-						Logged in as <strong>username</strong>
+						Logged in as <strong>{user.username}</strong>
 					</Typography>
 					<Avatar
 						className={classes.myUserAvatar}
 						onClick={() => setShowUserImageDialog(true)}
+						src={user.imageUrl}
 					>
 						U
 					</Avatar>

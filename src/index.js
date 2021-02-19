@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import BrowserRouter from "react-router/Router";
+import BrowserRouter from "react-router-dom/BrowserRouter";
 import createBrowserHistory from "history/createBrowserHistory";
 import { GlobalUserContextProvider } from "./GlobalUserState";
 import reportWebVitals from "./reportWebVitals";
@@ -12,7 +12,7 @@ const history = createBrowserHistory();
 ReactDOM.render(
 	<React.StrictMode>
 		<GlobalUserContextProvider>
-			<BrowserRouter history={history}>
+			<BrowserRouter>
 				<App />
 			</BrowserRouter>
 		</GlobalUserContextProvider>

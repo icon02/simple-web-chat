@@ -105,6 +105,7 @@ export default function ChatPage(props) {
 
 	const Contacts = (
 		<ChatContacts
+			{...props}
 			selectedContact={selectedContact}
 			setSelectedContact={setSelectedContact}
 		/>
@@ -112,16 +113,18 @@ export default function ChatPage(props) {
 	const Chat = (
 		<>
 			<ChatBanner
+				{...props}
 				selectedContact={selectedContact}
 				onBackPress={onMobileBackPress}
 				// isLoading={isMessagesLoading}
 			/>
 			<ChatMessages
+				{...props}
 				selectedContact={selectedContact}
 				messages={messages}
 				isLoading={isMessagesLoading}
 			/>
-			<ChatInput onSend={onSend} enabled={isInputEnabled} />
+			<ChatInput {...props} onSend={onSend} enabled={isInputEnabled} />
 		</>
 	);
 

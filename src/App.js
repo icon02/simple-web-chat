@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Paper } from "@material-ui/core";
-import RouterSwitch from "react-router/Switch";
-import Route from "react-router/Route";
+import RouterSwitch from "react-router-dom/Switch";
+import Route from "react-router-dom/Route";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/login/LoginPage";
 import ChatPage from "./pages/chat/ChatPage";
