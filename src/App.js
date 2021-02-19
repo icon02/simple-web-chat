@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Typography, Paper } from "@material-ui/core";
+import LoginPage from "./pages/login/LoginPage";
+import ChatPage from "./pages/chat/ChatPage";
+import ContactComponent from "./pages/chat/components/ContactComponent";
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		height: "100vh",
+		width: "100vw",
+		overflow: "scroll",
+		borderRadius: 0,
+	},
+}));
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const classes = useStyles();
+
+	return (
+		<Paper className={classes.root}>
+			{/* 
+    <LoginPage />*/}
+
+			<ChatPage />
+		</Paper>
+	);
 }
 
 export default App;
