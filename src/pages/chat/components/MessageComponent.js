@@ -70,13 +70,16 @@ export default function MessageComponent({
 				</Typography>
 			</Fade>
 			<div className={classes.messageContainer} {...props}>
-				<Typography
-					variant="body1"
-					component="p"
-					className={classes.message}
-				>
-					{message}
-				</Typography>
+				{message.split("\n").map((s) => (
+					<Typography
+						variant="body1"
+						component="p"
+						className={classes.message}
+					>
+						{s}
+					</Typography>
+				))}
+
 				{attachmentName && (
 					<>
 						<Divider className={classes.divider} />

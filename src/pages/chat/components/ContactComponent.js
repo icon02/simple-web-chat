@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
 			props.selected ? theme.palette.primary.light : "",
 
 		width: "100%",
-		borderTop: "1px solid white",
+		borderTop: "1px solid",
+		borderColor: theme.palette.background.paper,
 		[theme.breakpoints.down("sm")]: {
 			borderTop: "1px solid",
 			borderTopColor: theme.palette.primary.light,
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	typography: {
-		color: theme.palette.common.white,
+		color: theme.palette.background.paper,
 		[theme.breakpoints.down("sm")]: {
 			fontWeight: "bold",
 			color: theme.palette.primary.main,

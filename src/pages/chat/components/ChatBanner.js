@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.down("sm")]: {
 			backgroundColor: theme.palette.primary.main,
 		},
-		borderBottom: "1px solid",
+		borderBottom: "3px solid",
 		borderBottomColor: theme.palette.primary.main,
 		borderRadius: 0,
 		display: "flex",
@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 			borderBottom: "none",
 			margin: theme.spacing(1),
 		},
+	},
+	backButton: {
+		color: theme.palette.background.paper,
 	},
 	contactContainer: {
 		display: "flex",
@@ -84,7 +87,7 @@ export default function ChatBanner({
 		<Paper className={classes.root} elevation={0}>
 			<div className={classes.contactContainer}>
 				<Hidden mdUp>
-					<IconButton onClick={onBackPress}>
+					<IconButton onClick={onBackPress} className={classes.backButton}>
 						<BackIcon />
 					</IconButton>
 				</Hidden>

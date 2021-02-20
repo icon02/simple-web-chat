@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "0.8rem",
 		backgroundColor: theme.palette.primary.main,
 		transition: theme.transitions.create(["box-shadow"]),
+		color: theme.palette.background.paper,
 		"&:hover": {
 			boxShadow: `0px 0px 6px 2px ${theme.palette.primary.main}`,
 			cursor: "pointer",

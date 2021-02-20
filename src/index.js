@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import BrowserRouter from "react-router-dom/BrowserRouter";
 import createBrowserHistory from "history/createBrowserHistory";
 import { GlobalUserContextProvider } from "./GlobalUserState";
+import { LightTheme, DarkTheme } from "./Themes";
 import reportWebVitals from "./reportWebVitals";
 
 const history = createBrowserHistory();
@@ -13,7 +15,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<GlobalUserContextProvider>
 			<BrowserRouter>
-				<App />
+				<ThemeProvider theme={LightTheme}>
+					<App />
+				</ThemeProvider>
 			</BrowserRouter>
 		</GlobalUserContextProvider>
 	</React.StrictMode>,

@@ -120,6 +120,9 @@ const useStyles = makeStyles((theme) => ({
 	clearSearchButton: {
 		marginRight: `-${theme.spacing(1)}px`,
 	},
+	clearIcon: {
+		color: theme.palette.background.paper,
+	},
 	snackPaper: {
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.primary.main,
@@ -169,6 +172,24 @@ const useStyles = makeStyles((theme) => ({
 		height: "auto",
 		maxHeight: "100%",
 		objectFit: "scale-down",
+	},
+	loggedInText: {
+		color: theme.palette.background.paper,
+		[theme.breakpoints.down("sm")]: {
+			color:
+				theme.palette.type === "light"
+					? theme.palette.common.black
+					: theme.palette.common.white,
+		},
+	},
+	icon: {
+		color: theme.palette.background.paper,
+		[theme.breakpoints.down("sm")]: {
+			color:
+				theme.palette.type === "light"
+					? theme.palette.common.black
+					: theme.palette.common.white,
+		},
 	},
 }));
 
@@ -314,14 +335,6 @@ export default function ChatContacts({
 		setSoundOn(!isSoundOn);
 	}
 
-	// function moreOnClick(e) {
-	// 	setMoreMenuAnchor(e.currentTarget);
-	// }
-
-	// function moreMenuOnClose() {
-	// 	setMoreMenuAnchor(null);
-	// }
-
 	function clearSearchOnClick() {
 		setSearchText("");
 	}
@@ -332,8 +345,11 @@ export default function ChatContacts({
 
 	function logout() {
 		setUser(null);
-		// history.push("/login");
-		// TODO
+	}
+
+	function profileImageOnClick() {
+		if (user.imageUrl && user.imageUrl.length > 0)
+			setShowUserImageDialog(true);
 	}
 
 	return (
@@ -411,7 +427,7 @@ export default function ChatContacts({
 									onTouchEnd={clearSearchOnClick}
 									className={classes.clearSearchButton}
 								>
-									<ClearIcon />
+									<ClearIcon className={classes.clearIcon} />
 								</IconButton>
 							</Fade>
 						</InputAdornment>
@@ -438,28 +454,33 @@ export default function ChatContacts({
 			</div>
 			<div className={classes.settingsContainer}>
 				<IconButton size="small" onClick={logoutOnClick}>
-					<LogoutIcon />
+					<LogoutIcon className={classes.icon} />
 				</IconButton>
 
 				<div className={classes.myUserContainer}>
 					<Typography
+						className={classes.loggedInText}
 						variant="body2"
 						component="p"
-						style={{ fontSize: "0.75rem" }}
+						style={{ fontSize: "0.8rem" }}
 					>
 						Logged in as <strong>{user.username}</strong>
 					</Typography>
 					<Avatar
 						className={classes.myUserAvatar}
-						onClick={() => setShowUserImageDialog(true)}
+						onClick={profileImageOnClick}
 						src={user.imageUrl}
 					>
-						U
+						{user.username.charAt(0)}
 					</Avatar>
 				</div>
 
 				<IconButton size="small" onClick={toggleSoundOnOff}>
-					{isSoundOn ? <SoundOnIcon /> : <SoundOffIcon />}
+					{isSoundOn ? (
+						<SoundOnIcon className={classes.icon} />
+					) : (
+						<SoundOffIcon className={classes.icon} />
+					)}
 				</IconButton>
 
 				{/*
