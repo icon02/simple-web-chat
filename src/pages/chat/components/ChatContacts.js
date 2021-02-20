@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 		transition: theme.transitions.create(["height"]),
 		[theme.breakpoints.down("sm")]: {
 			backgroundColor: theme.palette.primary.main,
+			// backgroundImage: `linear-gradient(180deg, ${theme.palette.primary.main} 90%, rgba(0, 0, 0, 0) 100%)`,
 			height: (props) =>
 				props.lastScrollActionWasDown ? 0 : default_search_container_height,
 		},
@@ -148,10 +149,13 @@ const useStyles = makeStyles((theme) => ({
 		width: 35,
 		height: 35,
 		scale: 0.6,
-		transition: theme.transitions.create(["scale"]),
-		"&:hover": {
-			scale: 0.8,
-			cursor: "pointer",
+
+		[theme.breakpoints.up("md")]: {
+			transition: theme.transitions.create(["scale"]),
+			"&:hover": {
+				scale: 0.8,
+				cursor: "pointer",
+			},
 		},
 	},
 	userImageDialog: {
@@ -190,6 +194,9 @@ const useStyles = makeStyles((theme) => ({
 					? theme.palette.common.black
 					: theme.palette.common.white,
 		},
+	},
+	logoutButtonYes: {
+		color: theme.palette.background.paper,
 	},
 }));
 
@@ -361,14 +368,22 @@ export default function ChatContacts({
 				<DialogTitle>Do you really want to log out?</DialogTitle>
 				<div className={classes.logoutDialogContent}>
 					<Button variant="contained" color="primary" onClick={logout}>
-						Yes
+						<Typography
+							variant="subtitle1"
+							component="p"
+							className={classes.logoutButtonYes}
+						>
+							Yes
+						</Typography>
 					</Button>
 					<Button
 						variant="outlined"
 						color="primary"
 						onClick={() => setShowLogoutDialog(false)}
 					>
-						No
+						<Typography variant="subtitle1" component="p">
+							No
+						</Typography>
 					</Button>
 				</div>
 			</Dialog>

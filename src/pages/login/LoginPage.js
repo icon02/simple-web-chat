@@ -108,7 +108,7 @@ export default function LoginPage(props) {
 
 				<TextField
 					onFocus={() => setUsernameError(false)}
-					label="Username"
+					label="Username *"
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
 					inputProps={{

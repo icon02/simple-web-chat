@@ -49,11 +49,23 @@ const useStyles = makeStyles((theme) => ({
 			color: theme.palette.primary.main,
 		},
 	},
+	newMessageDiv: {
+		height: 10,
+		width: 10,
+		borderRadius: "50%",
+		backgroundColor: theme.palette.primary.dark,
+		[theme.breakpoints.down("sm")]: {
+			backgroundColor: theme.palette.primary.main,
+		},
+		marginLeft: "auto",
+		marginRight: theme.spacing(2),
+	},
 }));
 
 export default function ContactComponent({
 	selected = false,
 	contact = { username: "Undefined", imageUrl: "" },
+	newMessage = false,
 	...props
 }) {
 	const classes = useStyles({ selected: selected });
@@ -66,6 +78,7 @@ export default function ContactComponent({
 			<Typography variant="h6" component="p" className={classes.typography}>
 				{contact.username}
 			</Typography>
+			{newMessage && <div className={classes.newMessageDiv} />}
 		</div>
 	);
 }

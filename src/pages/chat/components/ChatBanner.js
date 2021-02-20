@@ -71,10 +71,12 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		width: 50,
 		height: 50,
-		transition: theme.transitions.create(["scale"]),
-		"&:hover": {
-			cursor: "pointer",
-			scale: 1.1,
+		[theme.breakpoints.up("md")]: {
+			transition: theme.transitions.create(["scale"]),
+			"&:hover": {
+				cursor: "pointer",
+				scale: 1.1,
+			},
 		},
 	},
 	imageDialog: {
