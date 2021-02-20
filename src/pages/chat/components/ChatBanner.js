@@ -7,6 +7,7 @@ import {
 	Fade,
 	Typography,
 	Hidden,
+	Dialog,
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { blue } from "@material-ui/core/colors";
@@ -70,6 +71,30 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		width: 50,
 		height: 50,
+		transition: theme.transitions.create(["scale"]),
+		"&:hover": {
+			cursor: "pointer",
+			scale: 1.1,
+		},
+	},
+	imageDialog: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		[theme.breakpoints.down("sm")]: {
+			width: 320,
+			height: 240,
+		},
+		[theme.breakpoints.up("sm")]: {
+			width: 540,
+			height: 360,
+		},
+	},
+	dialogImage: {
+		width: "100%",
+		height: "auto",
+		maxHeight: "100%",
+		objectFit: "scale-down",
 	},
 }));
 
@@ -78,13 +103,34 @@ export default function ChatBanner({
 	onDelete,
 	isLoading = false,
 	img = null,
-	selectedContact = { imageSrc: "", username: "Undefined" },
+	selectedContact = { imageUrl: "", username: "Undefined" },
 	onBackPress,
 }) {
 	const classes = useStyles();
+	const [showImageDialog, setShowImageDialog] = useState(false);
+
+	function avatarOnClick() {
+		if (
+			selectedContact &&
+			selectedContact.imageUrl &&
+			selectedContact.imageUrl.length > 0
+		)
+			setShowImageDialog(true);
+	}
 
 	return (
 		<Paper className={classes.root} elevation={0}>
+			<Dialog
+				open={showImageDialog}
+				onClose={() => setShowImageDialog(false)}
+			>
+				<div className={classes.userImageDialog}>
+					<img
+						className={classes.dialogImage}
+						src={selectedContact && selectedContact.imageUrl}
+					/>
+				</div>
+			</Dialog>
 			<div className={classes.contactContainer}>
 				<Hidden mdUp>
 					<IconButton onClick={onBackPress} className={classes.backButton}>
@@ -99,8 +145,9 @@ export default function ChatBanner({
 				) : (
 					<>
 						<Avatar
+							onClick={avatarOnClick}
 							className={classes.avatar}
-							src={selectedContact && selectedContact.imageSrc}
+							src={selectedContact && selectedContact.imageUrl}
 						>
 							{selectedContact &&
 								selectedContact.username

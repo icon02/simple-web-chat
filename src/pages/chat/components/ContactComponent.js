@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { Typography, Avatar, InputAdornment } from "@material-ui/core";
+import { Typography, Avatar, Dialog } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 		"& > *": {
-			pointerEvents: "none",
+			// pointerEvents: "none",
 			marginTop: theme.spacing(1),
 			marginBottom: theme.spacing(1),
 		},
@@ -53,14 +53,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ContactComponent({
 	selected = false,
-	contact = { username: "Undefined", imageSrc: "" },
+	contact = { username: "Undefined", imageUrl: "" },
 	...props
 }) {
 	const classes = useStyles({ selected: selected });
 
 	return (
 		<div className={classes.root} {...props}>
-			<Avatar src={contact ? contact.imageSrc : ""}>
+			<Avatar src={contact ? contact.imageUrl : ""}>
 				{contact ? contact.username.substr(0, 1).toLocaleUpperCase() : "?"}
 			</Avatar>
 			<Typography variant="h6" component="p" className={classes.typography}>
