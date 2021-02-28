@@ -25,7 +25,7 @@ function App() {
 			<RouterSwitch>
 				<Route path="/login" exact component={LoginPage} />
 				<ProtectedRoute path="/chat" exact component={ChatPage} />
-				<Route path="/" exact component={LandingPage} />
+				<Route path="/" component={LandingPage} />
 			</RouterSwitch>
 		</Paper>
 	);
