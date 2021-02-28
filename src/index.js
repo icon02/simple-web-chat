@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import HashRouter from "react-router-dom/BrowserRouter";
+import HashRouter from "react-router-dom/HashRouter";
 import createBrowserHistory from "history/createBrowserHistory";
 import { GlobalUserContextProvider } from "./GlobalUserState";
 import { LightTheme, DarkTheme } from "./Themes";
